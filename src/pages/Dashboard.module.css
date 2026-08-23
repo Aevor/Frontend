@@ -1,0 +1,22 @@
+.page { display: flex; flex-direction: column; gap: 32px; }
+.identity { font-size: 16px; font-weight: 500; }
+.section { display: flex; flex-direction: column; gap: 12px; }
+.sectionHeader { display: flex; justify-content: space-between; align-items: center; }
+.sectionTitle { font-size: 15px; font-weight: 600; margin: 0; }
+.viewAll { font-size: 13px; color: #666; text-decoration: none; }
+
+.pulseRow { display: flex; gap: 16px; }
+.pulseChip { display: flex; flex-direction: column; gap: 4px; padding: 16px 20px; border-radius: 8px; background: #f5f5f5; }
+.pulseNumber { font-size: 22px; font-weight: 700; }
+.pulseLabel { font-size: 12px; color: #808080; }
+
+.skillList { display: flex; flex-direction: column; gap: 10px; }
+.skillRow { display: flex; align-items: center; gap: 12px; }
+.skillName { width: 80px; font-size: 13px; }
+.barTrack { flex: 1; height: 8px; border-radius: 4px; background: #ebebeb; max-width: 300px; }
+.barFill { height: 100%; border-radius: 4px; background: #191919; }
+
+.recRow { display: flex; gap: 16px; }
+.recCard { flex: 1; max-width: 280px; padding: 16px; border-radius: 8px; border: 1px solid #e6e6e6; display: flex; flex-direction: column; gap: 6px; }
+.recTitle { font-size: 14px; font-weight: 500; margin: 0; }
+.recMeta { font-size: 12px; color: #808080; margin: 0; }
