@@ -13,7 +13,7 @@
 .skillList { display: flex; flex-direction: column; gap: 10px; }
 .skillRow { display: flex; align-items: center; gap: 12px; }
 .skillName { width: 80px; font-size: 13px; }
-.barTrack { flex: 1; height: 8px; border-radius: 4px; background: #ebebeb; max-width: 300px; }
+.barTrack { flex: 1; height: 8px; border-radius: 4px; background: #e5e5e5; max-width: 300px; }
 .barFill { height: 100%; border-radius: 4px; background: #191919; }
 
 .recRow { display: flex; gap: 16px; }
