@@ -4,6 +4,7 @@ import { AppShell } from "./components/layout/AppShell";
 import { Landing } from "./pages/Landing";
 import { Dashboard } from "./pages/Dashboard";
 import { Skills } from "./pages/Skills";
+import { Recommendations } from "./pages/Recommendations";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route element={<AppShell />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/skills" element={<Skills />} />
+          <Route path="/recommendations" element={<Recommendations />} />
         </Route>
       </Route>
     </Routes>
