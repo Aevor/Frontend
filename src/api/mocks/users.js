@@ -1,7 +1,7 @@
 export const mockCurrentUser = {
   id: "mock-user-id",
-  githubId: 123456,
+  githubId: 7997305,
   username: "samir",
   displayName: "Samir Singh",
-  avatarUrl: "https://avatars.githubusercontent.com/u/190625443?v=4",
+  avatarUrl: "https://avatars.githubusercontent.com/u/7997305?v=4",
 };
