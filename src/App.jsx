@@ -6,6 +6,8 @@ import { Dashboard } from "./pages/Dashboard";
 import { Skills } from "./pages/Skills";
 import { Recommendations } from "./pages/Recommendations";
 import { IssueDetails } from "./pages/IssueDetails";
+import { AuthCallback } from "./pages/AuthCallback";
+import { RepositoryWorkspace } from "./pages/RepositoryWorkspace";
 import { Profile } from "./pages/Profile";
 import { Repositories } from "./pages/Repositories";
 
@@ -13,12 +15,14 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
+      <Route path="/auth/callback" element={<AuthCallback />} />
       <Route element={<ProtectedRoute />}>
         <Route element={<AppShell />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/skills" element={<Skills />} />
           <Route path="/recommendations" element={<Recommendations />} />
           <Route path="/issues/:id" element={<IssueDetails />} />
+          <Route path="/repositories/:id" element={<RepositoryWorkspace />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/repositories" element={<Repositories />} />
         </Route>
