@@ -8,6 +8,8 @@ import { Recommendations } from "./pages/Recommendations";
 import { IssueDetails } from "./pages/IssueDetails";
 import { AuthCallback } from "./pages/AuthCallback";
 import { RepositoryWorkspace } from "./pages/RepositoryWorkspace";
+import { Profile } from "./pages/Profile";
+import { Repositories } from "./pages/Repositories";
 
 export default function App() {
   return (
@@ -21,6 +23,8 @@ export default function App() {
           <Route path="/recommendations" element={<Recommendations />} />
           <Route path="/issues/:id" element={<IssueDetails />} />
           <Route path="/repositories/:id" element={<RepositoryWorkspace />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/repositories" element={<Repositories />} />
         </Route>
       </Route>
     </Routes>
