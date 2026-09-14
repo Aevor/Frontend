@@ -4,11 +4,33 @@
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
 
-// Session/auth handoff isn't settled yet — could land as an httpOnly
-// cookie (nothing to do here, credentials:'include' below covers it)
-// or a frontend-held token (fill this in once that's confirmed).
+// Auth handoff: the backend OAuth callback returns a JWT that the frontend
+// holds in localStorage and attaches as `Authorization: Bearer <jwt>` on
+// every request. The GitHub access token never touches the frontend.
+const AUTH_TOKEN_KEY = "aevor.jwt";
+
 function getAuthToken() {
-  return null;
+  try {
+    return window.localStorage.getItem(AUTH_TOKEN_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function setAuthToken(token) {
+  try {
+    if (token) {
+      window.localStorage.setItem(AUTH_TOKEN_KEY, token);
+    } else {
+      window.localStorage.removeItem(AUTH_TOKEN_KEY);
+    }
+  } catch {
+    // localStorage unavailable (private mode / storage disabled) — fail open.
+  }
+}
+
+function clearAuthToken() {
+  setAuthToken(null);
 }
 
 class ApiError extends Error {
@@ -68,4 +90,4 @@ export const apiClient = {
   delete: (path) => request(path, { method: "DELETE" }),
 };
 
-export { ApiError };
+export { ApiError, getAuthToken, setAuthToken, clearAuthToken };
