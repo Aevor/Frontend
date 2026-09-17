@@ -1,10 +1,12 @@
-import { Navigate } from "react-router";
+import { Navigate, useSearchParams } from "react-router";
 import { useSession } from "../hooks/useSession";
 import { BASE_URL } from "../api/client";
 import styles from "./Landing.module.css";
 
 export function Landing() {
   const { loading, isAuthenticated } = useSession();
+  const [searchParams] = useSearchParams();
+  const oauthFailed = searchParams.get("error") === "oauth_failed";
 
   if (!loading && isAuthenticated) {
     return <Navigate to="/dashboard" replace />;
@@ -18,6 +20,11 @@ export function Landing() {
         <br />
         matched to real open-source issues.
       </h1>
+      {oauthFailed && (
+        <p className={styles.error}>
+          Sign-in didn't complete. Try again.
+        </p>
+      )}
       <a className={styles.button} href={`${BASE_URL}/auth/github/login`}>
         Continue with GitHub
       </a>

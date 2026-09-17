@@ -31,6 +31,12 @@
   text-decoration: none;
 }
 
+.error {
+  color: #d63031;
+  font-size: 14px;
+  margin: 0;
+}
+
 .disclaimer {
   font-size: 13px;
   color: #737373;
