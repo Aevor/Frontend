@@ -7,6 +7,8 @@ import { getRecommendations } from "../api/recommendations";
 import { LoadingSkeleton } from "../components/common/LoadingSkeleton";
 import { EmptyState } from "../components/common/EmptyState";
 import { ErrorState } from "../components/common/ErrorState";
+import { RepositoryList } from "../components/common/RepositoryList";
+import { SelectedRepositoryList } from "../components/common/SelectedRepositoryList";
 import styles from "./Dashboard.module.css";
 
 export function Dashboard() {
@@ -22,6 +24,20 @@ export function Dashboard() {
           @{user.username} · {user.displayName}
         </p>
       )}
+
+      <section className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>My Aevor Workspace</h2>
+        </div>
+        <SelectedRepositoryList />
+      </section>
+
+      <section className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>Your Repositories</h2>
+        </div>
+        <RepositoryList />
+      </section>
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Contribution Pulse</h2>
