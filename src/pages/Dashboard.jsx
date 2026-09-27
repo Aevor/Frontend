@@ -19,11 +19,7 @@ export function Dashboard() {
 
   return (
     <div className={styles.page}>
-      {user && (
-        <p className={styles.identity}>
-          @{user.username} · {user.displayName}
-        </p>
-      )}
+      {user && <p className={styles.identity}>{user.displayName}</p>}
 
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
@@ -45,17 +41,17 @@ export function Dashboard() {
         {pulse.error && <ErrorState onRetry={pulse.refetch} />}
         {pulse.data && (
           <div className={styles.pulseRow}>
-            <div className={styles.pulseChip}>
+            <div className={styles.pulseStat}>
               <span className={styles.pulseNumber}>{pulse.data.prs}</span>
-              <span className={styles.pulseLabel}>PRs</span>
+              <span className={styles.pulseLabel}>Pull requests</span>
             </div>
-            <div className={styles.pulseChip}>
+            <div className={styles.pulseStat}>
               <span className={styles.pulseNumber}>{pulse.data.repos}</span>
-              <span className={styles.pulseLabel}>Repos</span>
+              <span className={styles.pulseLabel}>Repositories</span>
             </div>
-            <div className={styles.pulseChip}>
+            <div className={styles.pulseStat}>
               <span className={styles.pulseNumber}>{pulse.data.issues}</span>
-              <span className={styles.pulseLabel}>Issues</span>
+              <span className={styles.pulseLabel}>Issues closed</span>
             </div>
           </div>
         )}
@@ -64,10 +60,9 @@ export function Dashboard() {
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Skill Signature</h2>
-          <Link to="/skills" className={styles.viewAll}>View all →</Link>
+          <Link to="/skills" className={styles.viewAll}>View skills</Link>
         </div>
         {skills.loading && <LoadingSkeleton height={60} />}
-        {skills.error && <ErrorState onRetry={skills.refetch} />}
         {skills.data?.length === 0 && (
           <EmptyState message="No skills detected yet — sync your GitHub activity to get started." />
         )}
@@ -88,7 +83,7 @@ export function Dashboard() {
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Recommended for you</h2>
-          <Link to="/recommendations" className={styles.viewAll}>View all →</Link>
+          <Link to="/recommendations" className={styles.viewAll}>View all</Link>
         </div>
         {recommendations.loading && <LoadingSkeleton height={90} />}
         {recommendations.error && <ErrorState onRetry={recommendations.refetch} />}
@@ -100,7 +95,10 @@ export function Dashboard() {
             {recommendations.data.slice(0, 2).map((rec) => (
               <div key={rec.id} className={styles.recCard}>
                 <p className={styles.recTitle}>{rec.title}</p>
-                <p className={styles.recMeta}>{rec.repository} · {rec.score}%</p>
+                <div className={styles.recMeta}>
+                  <span>{rec.repository}</span>
+                  <span className={styles.recScore}>{rec.score}</span>
+                </div>
               </div>
             ))}
           </div>

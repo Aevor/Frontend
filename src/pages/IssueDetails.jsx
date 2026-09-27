@@ -21,7 +21,7 @@ export function IssueDetails() {
   if (!issue) {
     return (
       <div className={styles.page}>
-        <Link to="/recommendations" className={styles.back}>← Back to recommendations</Link>
+        <Link to="/recommendations" className={styles.back}>Back to recommendations</Link>
         <ErrorState message="Couldn't find this issue." />
       </div>
     );
@@ -29,10 +29,14 @@ export function IssueDetails() {
 
   return (
     <div className={styles.page}>
-      <Link to="/recommendations" className={styles.back}>← Back to recommendations</Link>
+      <Link to="/recommendations" className={styles.back}>Back to recommendations</Link>
 
       <h1 className={styles.title}>{issue.title}</h1>
-      <p className={styles.meta}>{issue.repository} · opened by @octocat</p>
+
+      <div className={styles.metaRow}>
+        <span>{issue.repository}</span>
+        <span>Opened by @octocat</span>
+      </div>
 
       <div className={styles.chips}>
         <span className={styles.chip}>enhancement</span>
@@ -42,10 +46,21 @@ export function IssueDetails() {
       <div className={styles.body}>Issue body …</div>
 
       <div className={styles.statsRow}>
-        <p className={styles.required}>Required: {issue.skills.join(" · ")}</p>
-        <div className={styles.statsGroup}>
-          <span>Difficulty: {issue.difficulty}</span>
-          <span className={styles.score}>Match: {issue.score}%</span>
+        <div>
+          <p className={styles.statsLabel}>Required skills</p>
+          <div className={styles.skillTags}>
+            {issue.skills.map((skill) => (
+              <span key={skill} className={styles.skillTag}>{skill}</span>
+            ))}
+          </div>
+        </div>
+        <div className={styles.statBlock}>
+          <span className={styles.statLabel}>Difficulty</span>
+          <span className={styles.statValue}>{issue.difficulty}</span>
+        </div>
+        <div className={styles.statBlock}>
+          <span className={styles.statLabel}>Match</span>
+          <span className={styles.matchScore}>{issue.score}</span>
         </div>
       </div>
 

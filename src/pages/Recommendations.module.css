@@ -1,36 +1,15 @@
-.page { display: flex; flex-direction: column; gap: 24px; }
+.page { display: flex; flex-direction: column; gap: 28px; }
 .header { display: flex; justify-content: space-between; align-items: center; }
 .title { font-size: 22px; font-weight: 700; margin: 0; }
-.filterButton {
-  padding: 8px 14px;
-  border-radius: 6px;
-  border: 1px solid #d9d9d9;
-  background: #fff;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-}
+.filterButton { padding: 8px 14px; border-radius: 6px; border: 1px solid var(--line); background: var(--paper); font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer; }
 .list { display: flex; flex-direction: column; gap: 16px; max-width: 700px; }
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #e6e6e6;
-}
-.cardTitle { font-size: 16px; font-weight: 500; margin: 0; }
-.cardMeta { font-size: 13px; color: #808080; margin: 0; }
+.card { display: flex; flex-direction: column; gap: 12px; padding: 20px; border-radius: 8px; border: 1px solid var(--line); }
+.cardHeader { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.cardTitle { font-size: 16px; font-weight: 500; margin: 0 0 4px 0; }
+.metaRow { display: flex; gap: 12px; font-size: 13px; color: var(--muted); }
+.score { font-size: 20px; font-weight: 700; color: var(--signal); font-variant-numeric: tabular-nums; }
 .chips { display: flex; gap: 8px; }
-.chip { padding: 4px 10px; border-radius: 5px; background: #f5f5f5; font-size: 12px; }
-.why { font-size: 12px; color: #666; margin: 0; }
+.chip { padding: 4px 10px; border-radius: 5px; background: var(--paper); border: 1px solid var(--line); font-size: 12px; }
+.why { font-size: 12px; color: var(--muted); margin: 0; }
 .ctaRow { display: flex; justify-content: flex-end; }
-.cta {
-  padding: 8px 16px;
-  border-radius: 6px;
-  background: #191919;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 500;
-  text-decoration: none;
-}
+.cta { padding: 8px 16px; border-radius: 6px; background: var(--ink); color: var(--paper); font-size: 13px; font-weight: 500; text-decoration: none; }
