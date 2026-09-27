@@ -33,10 +33,16 @@ export function Recommendations() {
         <div className={styles.list}>
           {recommendations.map((rec) => (
             <div key={rec.id} className={styles.card}>
-              <p className={styles.cardTitle}>{rec.title}</p>
-              <p className={styles.cardMeta}>
-                {rec.repository} · {rec.difficulty} · {rec.score}%
-              </p>
+              <div className={styles.cardHeader}>
+                <div>
+                  <p className={styles.cardTitle}>{rec.title}</p>
+                  <div className={styles.metaRow}>
+                    <span>{rec.repository}</span>
+                    <span>{rec.difficulty}</span>
+                  </div>
+                </div>
+                <span className={styles.score}>{rec.score}</span>
+              </div>
               <div className={styles.chips}>
                 {rec.skills.map((skill) => (
                   <span key={skill} className={styles.chip}>{skill}</span>

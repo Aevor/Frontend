@@ -21,7 +21,9 @@ export function Profile() {
           <img src={user?.avatarUrl} alt="" className={styles.avatar} />
           <div className={styles.nameCol}>
             <span className={styles.name}>{user?.displayName}</span>
-            <span className={styles.handle}>@{user?.username} · github.com/{user?.username}</span>
+            <a className={styles.handle} href={`https://github.com/${user?.username}`}>
+              @{user?.username}
+            </a>
           </div>
         </div>
 
@@ -29,7 +31,7 @@ export function Profile() {
         {pulse.error && <ErrorState onRetry={pulse.refetch} />}
         {pulse.data && (
           <p className={styles.stat}>
-            {pulse.data.prs} PRs across {pulse.data.repos} repositories
+            {pulse.data.prs} pull requests across {pulse.data.repos} repositories
           </p>
         )}
 
@@ -37,8 +39,8 @@ export function Profile() {
         {topSkillNames && <p className={styles.stat}>Top skills: {topSkillNames}</p>}
 
         <div className={styles.links}>
-          <Link to="/skills" className={styles.link}>View Skill Signature →</Link>
-          <Link to="/repositories" className={styles.link}>View Repositories →</Link>
+          <Link to="/skills" className={styles.link}>View Skill Signature</Link>
+          <Link to="/repositories" className={styles.link}>View Repositories</Link>
         </div>
       </div>
     </div>

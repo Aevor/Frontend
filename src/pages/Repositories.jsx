@@ -31,12 +31,21 @@ export function Repositories() {
             <div key={repo.id}>
               <div
                 className={styles.row}
+                role="button"
+                tabIndex={0}
+                aria-expanded={expandedId === repo.id}
                 onClick={() => setExpandedId(expandedId === repo.id ? null : repo.id)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setExpandedId(expandedId === repo.id ? null : repo.id);
+                  }
+                }}
               >
                 <span className={styles.colRepo}>{repo.fullName}</span>
                 <span className={styles.colLang}>{repo.language}</span>
-                <span className={styles.colNum}>{repo.prs}</span>
-                <span className={styles.colNum}>{repo.stars}</span>
+                <span className={`${styles.colNum} ${styles.count}`}>{repo.prs}</span>
+                <span className={`${styles.colNum} ${styles.count}`}>{repo.stars}</span>
                 <span className={styles.colExpand}>{expandedId === repo.id ? "▴" : "▾"}</span>
               </div>
               {expandedId === repo.id && (

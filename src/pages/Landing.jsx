@@ -6,7 +6,7 @@ import styles from "./Landing.module.css";
 export function Landing() {
   const { loading, isAuthenticated } = useSession();
   const [searchParams] = useSearchParams();
-  const oauthFailed = searchParams.get("error") === "oauth_failed";
+  const hasError = searchParams.get("error") === "oauth_failed";
 
   if (!loading && isAuthenticated) {
     return <Navigate to="/dashboard" replace />;
@@ -20,14 +20,10 @@ export function Landing() {
         <br />
         matched to real open-source issues.
       </h1>
-      {oauthFailed && (
-        <p className={styles.error}>
-          Sign-in didn't complete. Try again.
-        </p>
-      )}
       <a className={styles.button} href={`${BASE_URL}/auth/github/login`}>
         Continue with GitHub
       </a>
+      {hasError && <p className={styles.error}>Couldn't sign you in. Try again.</p>}
       <p className={styles.disclaimer}>
         We read public repos, PRs and issues. Nothing is posted on your behalf.
       </p>
