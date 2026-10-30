@@ -7,7 +7,6 @@ import { Dashboard } from "./pages/Dashboard";
 import { Skills } from "./pages/Skills";
 import { Recommendations } from "./pages/Recommendations";
 import { IssueDetails } from "./pages/IssueDetails";
-import { AuthCallback } from "./pages/AuthCallback";
 import { RepositoryWorkspace } from "./pages/RepositoryWorkspace";
 import { Profile } from "./pages/Profile";
 import { Repositories } from "./pages/Repositories";

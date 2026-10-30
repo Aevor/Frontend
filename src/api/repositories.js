@@ -11,3 +11,23 @@ export function getRepositories() {
   }
   return apiClient.get("/repositories");
 }
+
+export function selectRepository(id) {
+  return apiClient.post(`/repositories/${id}/select`);
+}
+
+export function prepareRepository(id) {
+  return apiClient.post(`/repositories/${id}/prepare`);
+}
+
+export function getSelectedRepositories() {
+  return apiClient.get("/repositories/selected");
+}
+
+export function removeSelectedRepository(id) {
+  return apiClient.delete(`/repositories/selected/${id}`);
+}
+
+export function analyzeRepository(id, query) {
+  return apiClient.post(`/repositories/${id}/analyze`, { query });
+}
