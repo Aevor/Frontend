@@ -1,0 +1,17 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px 0;
+}
+.message { font-size: 14px; color: #737373; }
+.action {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}

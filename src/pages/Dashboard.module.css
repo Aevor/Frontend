@@ -1,0 +1,21 @@
+.page { display: flex; flex-direction: column; gap: 36px; }
+.identity { font-size: 17px; font-weight: 700; margin: 0; }
+.section { display: flex; flex-direction: column; gap: 14px; }
+.sectionHeader { display: flex; justify-content: space-between; align-items: center; }
+.sectionTitle { font-size: 15px; font-weight: 500; margin: 0; }
+.viewAll { font-size: 13px; color: var(--muted); text-decoration: none; }
+.viewAll:hover { color: var(--ink); }
+.pulseRow { display: flex; gap: 40px; }
+.pulseStat { display: flex; flex-direction: column; gap: 4px; }
+.pulseNumber { font-size: 28px; font-weight: 700; color: var(--verified); font-variant-numeric: tabular-nums; }
+.pulseLabel { font-size: 13px; color: var(--muted); }
+.skillList { display: flex; flex-direction: column; gap: 12px; }
+.skillRow { display: flex; align-items: center; gap: 16px; }
+.skillName { width: 90px; font-size: 13px; }
+.barTrack { flex: 1; height: 6px; border-radius: 3px; background: var(--line); max-width: 300px; }
+.barFill { height: 100%; border-radius: 3px; background: var(--signal); }
+.recRow { display: flex; gap: 16px; }
+.recCard { flex: 1; max-width: 280px; padding: 16px; border-radius: 8px; border: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+.recTitle { font-size: 14px; font-weight: 500; margin: 0; }
+.recMeta { display: flex; justify-content: space-between; align-items: baseline; }
+.recScore { font-size: 15px; font-weight: 700; color: var(--signal); font-variant-numeric: tabular-nums; }

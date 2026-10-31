@@ -1,0 +1,38 @@
+.container { display: flex; flex-direction: column; gap: 12px; }
+.emptyContainer { padding: 24px; border: 1px dashed #ccc; border-radius: 8px; }
+.list { display: flex; flex-direction: column; gap: 8px; }
+.row { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 12px 16px; 
+  border-radius: 8px; 
+  border: 1px solid #e6e6e6; 
+  background: #fff; 
+}
+.info { display: flex; flex-direction: column; gap: 2px; }
+.repoName { font-size: 14px; font-weight: 600; color: #191919; }
+.repoId { font-size: 11px; color: #999; font-family: monospace; }
+.actions { display: flex; gap: 8px; }
+.viewButton { 
+  font-size: 12px; 
+  padding: 6px 12px; 
+  border-radius: 4px; 
+  border: 1px solid #ccc; 
+  background: transparent; 
+  cursor: pointer; 
+  font-weight: 500; 
+}
+.viewButton:hover { background: #f9f9f9; }
+.removeButton { 
+  font-size: 12px; 
+  padding: 6px 12px; 
+  border-radius: 4px; 
+  border: 1px solid #ffcccc; 
+  background: #fffafa; 
+  color: #cc0000; 
+  cursor: pointer; 
+  font-weight: 500; 
+}
+.removeButton:hover { background: #ffcccc; }
+.removeButton:disabled { border-color: #eee; color: #ccc; cursor: not-allowed; }
