@@ -75,7 +75,7 @@ async function request(path, options = {}) {
 
   if (!response.ok) {
     const message =
-      (body && typeof body === "object" && body.message) ||
+      (body && typeof body === "object" && (body.message || body.error)) ||
       `Request failed with status ${response.status}`;
     throw new ApiError(message, response.status, body);
   }
