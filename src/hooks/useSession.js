@@ -6,34 +6,44 @@ export function useSession() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [requestVersion, setRequestVersion] = useState(0);
 
-  const checkSession = useCallback(() => {
+  const refetch = useCallback(() => {
     setLoading(true);
     setError(null);
-    getCurrentUser()
-      .then((data) => {
-        setUser(data);
-      })
-      .catch((err) => {
-        setUser(null);
-        if (!(err instanceof ApiError) || err.status !== 401) {
-          setError(err);
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    setRequestVersion((version) => version + 1);
   }, []);
 
   useEffect(() => {
-    checkSession();
-  }, [checkSession]);
+    let active = true;
+
+    Promise.resolve()
+      .then(() => getCurrentUser())
+      .then((data) => {
+        if (active) setUser(data);
+      })
+      .catch((requestError) => {
+        if (!active) return;
+
+        setUser(null);
+        if (!(requestError instanceof ApiError) || requestError.status !== 401) {
+          setError(requestError);
+        }
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [requestVersion]);
 
   return {
     user,
     loading,
     error,
     isAuthenticated: !!user,
-    refetch: checkSession,
+    refetch,
   };
 }
