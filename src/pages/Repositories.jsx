@@ -7,8 +7,9 @@ import { ErrorState } from "../components/common/ErrorState";
 import styles from "./Repositories.module.css";
 
 export function Repositories() {
-  const { data: repos, loading, error, refetch } = useApiResource(getRepositories);
+  const { data, loading, error, refetch } = useApiResource(getRepositories);
   const [expandedId, setExpandedId] = useState(null);
+  const repositories = data?.repositories || [];
 
   return (
     <div className={styles.page}>
@@ -16,43 +17,71 @@ export function Repositories() {
 
       {loading && <LoadingSkeleton height={200} />}
       {error && <ErrorState onRetry={refetch} />}
-      {repos?.length === 0 && <EmptyState message="No repositories found." />}
+      {!loading && !error && repositories.length === 0 && (
+        <EmptyState message="No GitHub repositories found." />
+      )}
 
-      {repos?.length > 0 && (
+      {repositories.length > 0 && (
         <div className={styles.table}>
           <div className={`${styles.row} ${styles.headerRow}`}>
-            <span className={styles.colRepo}>Repo</span>
-            <span className={styles.colLang}>Language</span>
-            <span className={styles.colNum}>PRs</span>
-            <span className={styles.colNum}>Stars</span>
+            <span className={styles.colRepo}>Repository</span>
+            <span className={styles.colLang}>Default branch</span>
+            <span className={styles.colNum}>Access</span>
             <span className={styles.colExpand} />
           </div>
-          {repos.map((repo) => (
-            <div key={repo.id}>
+          {repositories.map((repository) => (
+            <div key={repository.id}>
               <div
                 className={styles.row}
                 role="button"
                 tabIndex={0}
-                aria-expanded={expandedId === repo.id}
-                onClick={() => setExpandedId(expandedId === repo.id ? null : repo.id)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setExpandedId(expandedId === repo.id ? null : repo.id);
+                aria-expanded={expandedId === repository.id}
+                onClick={() =>
+                  setExpandedId(
+                    expandedId === repository.id ? null : repository.id
+                  )
+                }
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setExpandedId(
+                      expandedId === repository.id ? null : repository.id
+                    );
                   }
                 }}
               >
-                <span className={styles.colRepo}>{repo.fullName}</span>
-                <span className={styles.colLang}>{repo.language}</span>
-                <span className={`${styles.colNum} ${styles.count}`}>{repo.prs}</span>
-                <span className={`${styles.colNum} ${styles.count}`}>{repo.stars}</span>
-                <span className={styles.colExpand}>{expandedId === repo.id ? "▴" : "▾"}</span>
+                <span className={styles.colRepo}>
+                  {repository.full_name}
+                </span>
+                <span className={styles.colLang}>
+                  {repository.default_branch || "—"}
+                </span>
+                <span className={`${styles.colNum} ${styles.count}`}>
+                  {repository.private ? "Private" : "Public"}
+                </span>
+                <span className={styles.colExpand}>
+                  {expandedId === repository.id ? "▴" : "▾"}
+                </span>
               </div>
-              {expandedId === repo.id && (
+              {expandedId === repository.id && (
                 <div className={styles.expanded}>
-                  <p className={styles.description}>{repo.description}</p>
+                  <p className={styles.description}>
+                    {repository.description || "No description provided."}
+                  </p>
                   <p className={styles.contributors}>
-                    Contributors: {repo.contributors.join(", ")}
+                    Owner: {repository.owner_login || "Unknown"}
+                    {repository.html_url ? (
+                      <>
+                        {" · "}
+                        <a
+                          href={repository.html_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Open on GitHub
+                        </a>
+                      </>
+                    ) : null}
                   </p>
                 </div>
               )}
@@ -61,7 +90,7 @@ export function Repositories() {
         </div>
       )}
       <p className={styles.note}>
-        Expanding a row shows description and contributors — read-through, not a stored table.
+        Repository details come from the authenticated GitHub account. Pull-request and star totals are not part of this API response.
       </p>
     </div>
   );
