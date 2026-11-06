@@ -57,12 +57,25 @@ describe("repository API", () => {
     expect(apiClient.delete).toHaveBeenCalledWith("/repositories/selected-id");
   });
 
-  it("prepares a selected repository", async () => {
-    apiClient.post.mockResolvedValue({ status: "prepared" });
+  it("clones a selected repository before building its metadata index", async () => {
+    apiClient.post
+      .mockResolvedValueOnce({ status: "ready" })
+      .mockResolvedValueOnce({ status: "indexed", files: 8, chunks: 12 });
 
-    await prepareRepository("selected-id");
+    await expect(prepareRepository("selected-id")).resolves.toEqual({
+      status: "indexed",
+      files: 8,
+      chunks: 12,
+    });
 
-    expect(apiClient.post).toHaveBeenCalledWith("/repositories/selected-id/prepare");
+    expect(apiClient.post).toHaveBeenNthCalledWith(
+      1,
+      "/repositories/selected-id/clone"
+    );
+    expect(apiClient.post).toHaveBeenNthCalledWith(
+      2,
+      "/repositories/selected-id/index"
+    );
   });
 
   it("sends natural-language analysis as a query", async () => {
