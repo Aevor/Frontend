@@ -42,15 +42,17 @@ export function removeSelectedRepository(selectedRepositoryId) {
   );
 }
 
-// Prepare is a server-side pipeline over a repository the current user has
-// already selected. The API owns the clone path and all processing limits.
-export function prepareRepository(selectedRepositoryId) {
+// Preparing a selected repository uses the API's two explicit operations:
+// clone creates the controlled workspace; index runs the bounded
+// discover/filter/extract/chunk/represent pipeline and stores metadata.
+export async function prepareRepository(selectedRepositoryId) {
   if (USE_MOCKS) {
-    return Promise.resolve({ status: "prepared" });
+    return { status: "indexed" };
   }
-  return apiClient.post(
-    `/repositories/${encodeURIComponent(selectedRepositoryId)}/prepare`
-  );
+
+  const repositoryPath = `/repositories/${encodeURIComponent(selectedRepositoryId)}`;
+  await apiClient.post(`${repositoryPath}/clone`);
+  return apiClient.post(`${repositoryPath}/index`);
 }
 
 export function analyzeRepository(selectedRepositoryId, query) {
