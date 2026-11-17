@@ -2,6 +2,17 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { getCurrentUser } from "../api/users";
 import { ApiError } from "../api/client";
 
+let sessionRequest = null;
+
+function fetchSession() {
+  if (!sessionRequest) {
+    sessionRequest = getCurrentUser().finally(() => {
+      sessionRequest = null;
+    });
+  }
+  return sessionRequest;
+}
+
 export function useSession() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -15,7 +26,7 @@ export function useSession() {
       setLoading(true);
       setError(null);
     }
-    getCurrentUser()
+    fetchSession()
       .then((data) => {
         if (mounted.current && currentRequest === requestId.current) {
           setUser(data);
