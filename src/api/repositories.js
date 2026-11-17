@@ -6,11 +6,12 @@ let mockSelectedRepositories = [];
 
 // Repositories & Contributions. Expanding a row shows description
 // and contributors — a read-through view, not a separate table or route.
-export function getRepositories() {
+export function getRepositories(cursor) {
   if (USE_MOCKS) {
     return Promise.resolve({ repositories: mockRepositories, next_cursor: null });
   }
-  return apiClient.get("/repositories");
+  const query = cursor ? `?cursor=${encodeURIComponent(cursor)}` : "";
+  return apiClient.get(`/repositories${query}`);
 }
 
 export function selectRepository(repositoryId) {

@@ -9,8 +9,11 @@ export function AuthCallback() {
   useEffect(() => {
     const token = searchParams.get("token");
     if (token) {
-      setAuthToken(token);
-      navigate("/dashboard", { replace: true });
+      if (setAuthToken(token) !== false) {
+        navigate("/dashboard", { replace: true });
+      } else {
+        navigate("/?error=auth_storage_unavailable", { replace: true });
+      }
     } else {
       // No token means OAuth failed or was denied — back to Landing
       // with the error flag that page was always meant to read.

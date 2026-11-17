@@ -15,6 +15,8 @@ export function useSyncStatus() {
   const [status, setStatus] = useState("idle");
   const [lastSyncedAt, setLastSyncedAt] = useState(null);
   const intervalRef = useRef(null);
+  const requestId = useRef(0);
+  const mounted = useRef(false);
 
   const stopPolling = useCallback(() => {
     if (intervalRef.current) {
@@ -24,30 +26,43 @@ export function useSyncStatus() {
   }, []);
 
   const checkStatus = useCallback(() => {
+    const currentRequest = ++requestId.current;
     getSyncStatus()
       .then((data) => {
+        if (!mounted.current || currentRequest !== requestId.current) return;
         setStatus(data.status);
         setLastSyncedAt(data.lastSyncedAt);
         if (data.status !== "syncing") stopPolling();
       })
       .catch(() => {
+        if (!mounted.current || currentRequest !== requestId.current) return;
         setStatus("error");
         stopPolling();
       });
   }, [stopPolling]);
 
   const startSync = useCallback(() => {
+    stopPolling();
+    ++requestId.current;
     setStatus("syncing");
     triggerSync()
       .then(() => {
+        if (!mounted.current) return;
         intervalRef.current = setInterval(checkStatus, POLL_INTERVAL_MS);
+        checkStatus();
       })
-      .catch(() => setStatus("error"));
-  }, [checkStatus]);
+      .catch(() => {
+        if (mounted.current) setStatus("error");
+      });
+  }, [checkStatus, stopPolling]);
 
   useEffect(() => {
+    mounted.current = true;
     checkStatus();
-    return stopPolling;
+    return () => {
+      mounted.current = false;
+      stopPolling();
+    };
   }, [checkStatus, stopPolling]);
 
   return { status, lastSyncedLabel: formatRelativeTime(lastSyncedAt), startSync };

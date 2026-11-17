@@ -35,15 +35,16 @@ export function IssueDetails() {
 
       <div className={styles.metaRow}>
         <span>{issue.repository}</span>
-        <span>Opened by @octocat</span>
+        <span>Opened by @{issue.author || "unknown"}</span>
       </div>
 
       <div className={styles.chips}>
-        <span className={styles.chip}>enhancement</span>
-        <span className={styles.chip}>good-first-issue</span>
+        {(issue.labels || []).map((label) => (
+          <span key={label} className={styles.chip}>{label}</span>
+        ))}
       </div>
 
-      <div className={styles.body}>Issue body …</div>
+      <div className={styles.body}>{issue.body || "No issue description available."}</div>
 
       <div className={styles.statsRow}>
         <div>
@@ -71,7 +72,18 @@ export function IssueDetails() {
       </div>
 
       <div className={styles.ctaRow}>
-        <a href="#" className={styles.cta}>View on GitHub</a>
+        {issue.html_url || issue.link ? (
+          <a
+            href={issue.html_url || issue.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.cta}
+          >
+            View on GitHub
+          </a>
+        ) : (
+          <span className={styles.cta}>GitHub link unavailable</span>
+        )}
       </div>
     </div>
   );

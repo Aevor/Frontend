@@ -24,8 +24,9 @@ function setAuthToken(token) {
     } else {
       window.localStorage.removeItem(AUTH_TOKEN_KEY);
     }
+    return true;
   } catch {
-    // localStorage unavailable (private mode / storage disabled) — fail open.
+    return false;
   }
 }
 

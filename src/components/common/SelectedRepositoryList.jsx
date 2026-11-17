@@ -29,7 +29,7 @@ export function SelectedRepositoryList() {
     setDeletingId(id);
     try {
       await removeSelectedRepository(id);
-      refetch(); // Refresh the list after deletion
+      await refetch();
     } catch (err) {
       alert("Failed to remove repository: " + (err.message || "Unknown error"));
     } finally {

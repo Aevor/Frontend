@@ -6,7 +6,8 @@ import styles from "./Landing.module.css";
 export function Landing() {
   const { loading, isAuthenticated } = useSession();
   const [searchParams] = useSearchParams();
-  const hasError = searchParams.get("error") === "oauth_failed";
+  const errorCode = searchParams.get("error");
+  const hasError = errorCode === "oauth_failed" || errorCode === "auth_storage_unavailable";
 
   if (!loading && isAuthenticated) {
     return <Navigate to="/dashboard" replace />;

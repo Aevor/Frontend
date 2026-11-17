@@ -25,6 +25,7 @@ export default function App() {
           <Route path="/repositories/:id" element={<RepositoryWorkspace />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/repositories" element={<Repositories />} />
+          <Route path="*" element={<div>Page not found.</div>} />
         </Route>
       </Route>
     </Routes>
