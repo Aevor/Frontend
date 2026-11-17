@@ -18,6 +18,7 @@ export function RepositoryList() {
       
       // Trigger the preparation pipeline
       await prepareRepository(selectedId);
+      window.dispatchEvent(new Event("aevor:repositories-changed"));
       
       alert("Repository selected and prepared successfully!");
     } catch (err) {
@@ -53,11 +54,22 @@ export function RepositoryList() {
         {repos.map((repo) => (
           <div key={repo.id} className={styles.card}>
             <div className={styles.header}>
-              <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className={styles.repoLink}>
-                {repo.full_name}
+              <a
+                href={repo.link || repo.html_url || repo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.repoLink}
+              >
+                {repo.full_name || repo.fullName}
               </a>
-              <span className={`${styles.badge} ${repo.private ? styles.badgePrivate : styles.badgePublic}`}>
-                {repo.private ? "Private" : "Public"}
+              <span
+                className={`${styles.badge} ${
+                  repo.access === "private" || repo.private
+                    ? styles.badgePrivate
+                    : styles.badgePublic
+                }`}
+              >
+                {repo.access || (repo.private ? "Private" : "Public")}
               </span>
             </div>
             <p className={styles.description}>{repo.description || "No description provided."}</p>

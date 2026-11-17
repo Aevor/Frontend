@@ -72,7 +72,7 @@ export function RepositoryWorkspace() {
           </div>
 
           <div className={styles.insightsGrid}>
-            {result.insights.map((insight, i) => (
+            {(result.insights || []).map((insight, i) => (
               <div key={i} className={styles.insightCard}>
                 <div className={styles.insightHeader}>
                   <span className={styles.insightType}>{insight.type}</span>

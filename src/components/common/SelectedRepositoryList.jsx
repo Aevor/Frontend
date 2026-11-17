@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getSelectedRepositories, removeSelectedRepository } from "../../api/repositories";
 import { useApiResource } from "../../hooks/useApiResource";
@@ -12,13 +12,24 @@ export function SelectedRepositoryList() {
   const { data, loading, error, refetch } = useApiResource(getSelectedRepositories);
   const [deletingId, setDeletingId] = useState(null);
 
+  useEffect(() => {
+    const handleRepositoriesChanged = () => {
+      refetch();
+    };
+
+    window.addEventListener("aevor:repositories-changed", handleRepositoriesChanged);
+    return () => {
+      window.removeEventListener("aevor:repositories-changed", handleRepositoriesChanged);
+    };
+  }, [refetch]);
+
   async function handleRemove(id) {
     if (!confirm("Remove this repository from your workspace?")) return;
     
     setDeletingId(id);
     try {
       await removeSelectedRepository(id);
-      refetch(); // Refresh the list after deletion
+      await refetch();
     } catch (err) {
       alert("Failed to remove repository: " + (err.message || "Unknown error"));
     } finally {
