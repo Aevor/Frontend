@@ -92,4 +92,32 @@ describe("useApiResource", () => {
 
     expect(result.current.loading).toBe(false);
   });
+
+  test("ignores an older request that resolves after refetch", async () => {
+    let resolveFirstRequest;
+    const firstRequest = new Promise((resolve) => {
+      resolveFirstRequest = resolve;
+    });
+    const updatedData = { prs: 10, repos: 5 };
+    const fetchFn = vi.fn()
+      .mockReturnValueOnce(firstRequest)
+      .mockResolvedValueOnce(updatedData);
+
+    const { result } = renderHook(() => useApiResource(fetchFn));
+
+    act(() => {
+      result.current.refetch();
+    });
+
+    await waitFor(() => {
+      expect(result.current.data).toEqual(updatedData);
+    });
+
+    await act(async () => {
+      resolveFirstRequest(mockData);
+    });
+
+    expect(result.current.data).toEqual(updatedData);
+    expect(result.current.loading).toBe(false);
+  });
 });
