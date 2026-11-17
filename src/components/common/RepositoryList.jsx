@@ -18,6 +18,7 @@ export function RepositoryList() {
       
       // Trigger the preparation pipeline
       await prepareRepository(selectedId);
+      window.dispatchEvent(new Event("aevor:repositories-changed"));
       
       alert("Repository selected and prepared successfully!");
     } catch (err) {
